@@ -6,18 +6,19 @@
 package practical1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
  *
  * @author Marken Tuan Nguyen
  */
-public class ISBN extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame {
 
     /**
      * Creates new form ISBN
      */
-    public ISBN() {
+    public Main() {
         initComponents();
 //        int d;
 //        
@@ -55,6 +56,11 @@ public class ISBN extends javax.swing.JFrame {
         });
 
         verifyCard.setText("Verify Card");
+        verifyCard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                verifyCardMouseClicked(evt);
+            }
+        });
 
         clear.setText("Clear");
         clear.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -135,8 +141,6 @@ public class ISBN extends javax.swing.JFrame {
             }
         }
         
-        
-        
         for ( int i=0;i<d.size(); i++){
             resultBox.append( "index: " + (i+1) + " has char: " + d.get(i) + "\n"); 
         }
@@ -150,23 +154,24 @@ public class ISBN extends javax.swing.JFrame {
             resultBox.append("\nThe last digit should be: "+checkISBN(d));
         }         
     }//GEN-LAST:event_verifyISBNMouseClicked
-    
-//    private int hasLetter (ArrayList<Integer> d) {
-//        for ( int i=0;i<d.size(); i++){
-//            if(Character.isLetter(d.get(i))){
-//                System.out.println("Empty at index: " + (i+1));
-//                return (i+1);
-//            }     
-//        }
-//        return 0;
-//    }
-    
-//    private int predictDigit(int index, ArrayList<Integer> d) {
-//        int result = 0;
-//        int indexLetter = hasLetter(d);
-//        int sumNoLetter = checkISBN(d);
-//        return 0 ;
-//    }
+
+    private void verifyCardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifyCardMouseClicked
+        // TODO add your handling code here:
+        ArrayList<Character> d = new ArrayList<>(); 
+        String s;
+        s = editCard.getText();
+        
+        for ( int i=0; i<s.length(); i++){
+            if(Character.isLetterOrDigit(s.charAt(i))) {
+                d.add(s.charAt(i)); 
+            }
+        }
+        for ( int i=0;i<d.size(); i++){
+            resultBox.append( "index: " + (i) + " has char: " + d.get(i) + "\n"); 
+        }
+        
+        checkCard(d);
+    }//GEN-LAST:event_verifyCardMouseClicked
     
     private int checkISBN (ArrayList<Character> d){
         int sum = 0 ;
@@ -180,6 +185,28 @@ public class ISBN extends javax.swing.JFrame {
         }
         int remain = sum %11;
         return remain;
+    }
+    
+    private void checkCard (ArrayList<Character> d) {
+        ArrayList<Integer> card = new ArrayList<>();
+        
+        for(int i=0; i<d.size(); i++){ 
+            int num=0;
+            num = Integer.parseInt(String.valueOf(d.get(i)));
+            if (i%2==0){
+                
+                if(num*2 >= 10){
+                    card.add(num*2 - 9);
+                } else {
+                    card.add(num*2);
+                }   
+            } else {
+                card.add(num);
+            }
+        }
+        
+        System.out.println("card: "+ card);
+        
     }
     /**
      * @param args the command line arguments
@@ -198,20 +225,21 @@ public class ISBN extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ISBN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ISBN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ISBN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ISBN.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ISBN().setVisible(true);
+                new Main().setVisible(true);
             }
         });
     }
