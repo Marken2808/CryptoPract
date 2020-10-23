@@ -189,23 +189,46 @@ public class Main extends javax.swing.JFrame {
     
     private void checkCard (ArrayList<Character> d) {
         ArrayList<Integer> card = new ArrayList<>();
-        
+        int sum=0;
+        int remain=0;
         for(int i=0; i<d.size(); i++){ 
+            
             int num=0;
             num = Integer.parseInt(String.valueOf(d.get(i)));
             if (i%2==0){
                 
                 if(num*2 >= 10){
                     card.add(num*2 - 9);
+                    sum+=num*2-9;
                 } else {
                     card.add(num*2);
+                    sum+=num*2;
                 }   
             } else {
                 card.add(num);
+                sum+=num;
             }
         }
         
-        System.out.println("card: "+ card);
+        
+        resultBox.append(String.valueOf(card) + "\n");
+        
+        int last = card.get(card.size()-1);
+        resultBox.append(last+"\n");
+        
+        resultBox.append(sum+ "\n");
+        
+        remain = sum%10;
+        resultBox.append(remain+ "\n");
+        if(remain==0){
+            resultBox.append("Valid card");
+        } else {
+            resultBox.append("Invalid card");
+            resultBox.append("Last degit should be: " + ((last>remain)?(last-remain):(remain-last)));
+            
+        }
+        
+        
         
     }
     /**
