@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package practical1;
+package Check_ISNB_Card;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -191,12 +191,10 @@ public class Main extends javax.swing.JFrame {
         ArrayList<Integer> card = new ArrayList<>();
         int sum=0;
         int remain=0;
-        for(int i=0; i<d.size(); i++){ 
-            
+        for(int i=0; i<d.size(); i++){   
             int num=0;
             num = Integer.parseInt(String.valueOf(d.get(i)));
             if (i%2==0){
-                
                 if(num*2 >= 10){
                     card.add(num*2 - 9);
                     sum+=num*2-9;
@@ -211,25 +209,36 @@ public class Main extends javax.swing.JFrame {
         }
         
         
-        resultBox.append(String.valueOf(card) + "\n");
+        resultBox.append("double alt: "+String.valueOf(card) + "\n");
         
         int last = card.get(card.size()-1);
-        resultBox.append(last+"\n");
-        
-        resultBox.append(sum+ "\n");
-        
+
         remain = sum%10;
-        resultBox.append(remain+ "\n");
-        if(remain==0){
-            resultBox.append("Valid card");
+        if((sum-last)%10==0){
+            last = 0;
         } else {
-            resultBox.append("Invalid card");
-            resultBox.append("Last degit should be: " + ((last>remain)?(last-remain):(remain-last)));
+            last = 10 - (sum-last)%10;
+        }
+        
+        if(card.size()==16){
+            if(remain==0){
+                resultBox.append("Valid card");
+            } else {
+                resultBox.append("Invalid card\n");
+                resultBox.append("Last degit should be: " + last);
+            }
             
+        } else if (card.size()==15){
+            resultBox.append("Invalid card, please provide 16 digit!!!\n");
+            resultBox.append("Last degit should be: " + ((remain==0)?0:10-remain));
+        } else {
+            resultBox.append("Invalid card, cannot predict\n");
+            resultBox.append("Please provide 16 digit!!!\n");
         }
         
         
-        
+//      4552      7204     1234  5698  
+//      4552  1234  5678  1234
     }
     /**
      * @param args the command line arguments
