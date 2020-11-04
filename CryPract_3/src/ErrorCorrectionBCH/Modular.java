@@ -15,10 +15,9 @@ public class Modular {
     public Modular (){}
 
     public int checkNeg(int num){
-        if (num <0){
-            return num = Math.floorMod(num, 11);
-        } else
-            return num;
+
+        return num = Math.floorMod(num, 11);
+      
     }
     
     public int checkPow(int num, int pow){ 
@@ -37,7 +36,7 @@ public class Modular {
     
     public int checkSqr(int num){
         for(int i=0; i<i+1; i++){
-            if((i*i)%11==num){
+            if((i*i)%11==checkNeg(num)){
                 //System.out.println("i= " +i);
                 return i;
             }

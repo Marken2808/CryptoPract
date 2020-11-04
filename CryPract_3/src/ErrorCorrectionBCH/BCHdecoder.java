@@ -59,12 +59,49 @@ public class BCHdecoder {
             return "no error";
         }
         else if(cP==pqr.length ){
-            return "1 error at pos = "+(s[1]/s[0])+" & mag = "+(s[0]);
+            return "1 error at i = "+(s[1]/s[0])+" & a = "+(s[0]);
         } else {
-            int i = Math.floorMod(((-pqr[1] + (int)Math.sqrt(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) / (2*pqr[0])) ,11);
-            int j = Math.floorMod((-pqr[1] - (int)Math.sqrt(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) / (2*pqr[0]) ,11);
-            return "2 errors at i = "+i+" & j = " +j;
+            int sqr = checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2]);
+            
+            int i = checkNeg((-pqr[1] + checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) * checkPow(2*pqr[0],-1));
+            int j = checkNeg((-pqr[1] - checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) * checkPow(2*pqr[0],-1));
+            int b = checkNeg(checkNeg(i*s[0]-s[1]) * checkPow(i-j, -1));
+            int a = checkNeg(s[0]-b);
+         
+//            System.out.println(" sqr: " + sqr);
+//            System.out.println(" i: " + i);
+//            System.out.println(" j: " + j);
+
+            return "2 errors at i = "+i+ " with a = " + a +" & j = " +j +" with b = " +b;
         }
+    }
+    
+    public int checkNeg(int num){
+        return num = Math.floorMod(num, 11);
+    }
+    
+    public int checkPow(int num, int pow){ 
+        if(pow<0){
+            for(int i=0; i<i+1; i++){
+                if((11*i-pow)%num==0){
+                    num = (11*i-pow)/num; 
+                    return checkNeg(num);
+                }
+            }
+        } else {
+            return ((num*num)%11);
+        }
+        return 0;
+    }
+    
+    public int checkSqr(int num){
+        for(int i=0; i<i+1; i++){
+            if((i*i)%11==checkNeg(num)){
+                //System.out.println("i= " +i);
+                return i;
+            }
+        }
+        return 0;
     }
     
     public void call(){
