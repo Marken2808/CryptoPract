@@ -65,14 +65,20 @@ public class BCHdecoder {
             
             int i = checkNeg((-pqr[1] + checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) * checkPow(2*pqr[0],-1));
             int j = checkNeg((-pqr[1] - checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) * checkPow(2*pqr[0],-1));
-            int b = checkNeg(checkNeg(i*s[0]-s[1]) * checkPow(i-j, -1));
-            int a = checkNeg(s[0]-b);
-         
-//            System.out.println(" sqr: " + sqr);
-//            System.out.println(" i: " + i);
-//            System.out.println(" j: " + j);
+            
+            System.out.println(" sqr: " + sqr);
+            System.out.println(" i: " + i);
+            System.out.println(" j: " + j);
+            
+            if(i-j != 0){
+                int b = checkNeg(checkNeg(i*s[0]-s[1]) * checkPow(i-j, -1));
+                int a = checkNeg(s[0]-b);
+                return "2 errors at i = "+i+ " with a = " + a +" & j = " +j +" with b = " +b;
+            } else {
+                return "More than 2 errors";
+            }
+            
 
-            return "2 errors at i = "+i+ " with a = " + a +" & j = " +j +" with b = " +b;
         }
     }
     

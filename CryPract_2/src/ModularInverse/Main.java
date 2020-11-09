@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        long[] input=new long[]{1,2,3,4,5,6,7,8,9,10};
+        int[] input=new int[]{1,2,3,4,5,6,7,8,9,10};
         
         Modular mod = new Modular();
        
@@ -32,22 +32,22 @@ public class Main {
         System.out.print("\n▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔");
         System.out.print("\n| -x  |");
         for(int i=0; i<input.length; i++){
-            long neg = mod.checkNeg(-input[i]);
+            int neg = mod.checkNeg(-input[i]);
             System.out.print("\t"+(neg) + "\t|");
         }
         System.out.print("\n|  x² |");
         for(int i=0; i<input.length; i++){
-            long pow = mod.checkPow(input[i],2);
+            int pow = mod.checkPow(input[i],2);
             System.out.print("\t"+(pow) + "\t|");
         }
         System.out.print("\n| xˉ¹ |");
         for(int i=0; i<input.length; i++){
-            long pow = mod.checkPow(input[i],-1);
+            int pow = mod.checkPow(input[i],-1);
             System.out.print("\t"+(pow) + "\t|");
         }
         System.out.print("\n|  √x |");
         for(int i=0; i<input.length; i++){
-            long sqr = mod.checkSqr(input[i]);
+            int sqr = mod.checkSqr(input[i]);
             if(sqr>5){
                 System.out.print("     "+(sqr) + "\t|");
             } else System.out.print("\t"+(sqr) + "\t|");
