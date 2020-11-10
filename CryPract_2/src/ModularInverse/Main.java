@@ -48,8 +48,8 @@ public class Main {
         System.out.print("\n|  √x |");
         for(int i=0; i<input.length; i++){
             int sqr = mod.checkSqr(input[i]);
-            if(sqr>5){
-                System.out.print("     "+(sqr) + "\t|");
+            if(sqr==0){
+                System.out.print("\t \t|");
             } else System.out.print("\t"+(sqr) + "\t|");
             
             //System.out.println("num= "+sqr);
