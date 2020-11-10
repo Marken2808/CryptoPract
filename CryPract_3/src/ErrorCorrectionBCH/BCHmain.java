@@ -37,7 +37,7 @@ public class BCHmain {
 //        BCHgenerator digit = new BCHgenerator(d);
 //        int[] new_d = digit.addDigit();
         BCHdecoder dec = new BCHdecoder(d);
-        System.out.println("input: "+input);
+        System.out.println("input:\t"+input);
         dec.call();
         
     }

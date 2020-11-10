@@ -104,26 +104,14 @@ public class BCHdecoder {
     }
     
     public void output(int[][] arr){
-        for(int i=0; i<d.length; i++){
-            System.out.println("d:"+d[i]);
-            for(int p=0;p<arr.length;p++){
-                System.out.println("|-p: " +arr[p][0]);
-                if(i==arr[p][0]){
-                        System.out.println("----------------------->>>>");
-                    }
-//                for(int n=0; n<arr[p].length; n++){
-//                    System.out.println("|--n: " +arr[p][n]);
-//                    
-//                }
-            }  
-        }
         
-//        for(int p=0;p<arr.length;p++){
-//            System.out.println("p: " +p);
-//            for(int n=0; n<arr[p].length; n++){
-//                System.out.println("n: " +n);
-//            }
-//        }
+        for(int i=0; i<arr.length; i++){
+            d[arr[i][0]-1] = checkNeg((d[arr[i][0]-1]) - (arr[i][1]));
+        }
+//        System.out.println("Output: " + Arrays.toString(d));
+        StringBuilder builder = new StringBuilder();
+        for(int s : d) {builder.append(s);}
+        System.out.println("Output:\t" + builder.toString());
     }
     
     public int checkNeg(int num){
@@ -155,7 +143,7 @@ public class BCHdecoder {
     }
     
     public void call(){
-        System.out.println(" S[]: " +Arrays.toString(s));
+//        System.out.println(" S[]: " +Arrays.toString(s));
 //        System.out.println("pqr[]: " + Arrays.toString(calcPQR()));
         System.out.println("check: " +check());
 //        System.out.println("temp: " + Arrays.deepToString(temp));
