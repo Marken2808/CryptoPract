@@ -33,23 +33,29 @@ public class BCHdecoder {
         return this.pqr ;
     }
     
-    public int calcSQRT(){
-        int sqr = checkSqr((int) (Math.pow(pqr[1], 2)  -4*pqr[0]*pqr[2]));
-        return sqr;
-    }
     public int[] calcPos(){
         int[] pos = new int[2];
-        pos[0] = checkNeg((-pqr[1] + checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) * checkPow(2*pqr[0],-1));
-        pos[1] = checkNeg((-pqr[1] - checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) * checkPow(2*pqr[0],-1));
         
-        return pos;
+        if(pqr[0] == 0){
+            return null;
+        } else {
+            
+            pos[0] = checkNeg((-pqr[1] + checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) * checkPow(2*pqr[0],-1));
+            pos[1] = checkNeg((-pqr[1] - checkSqr(pqr[1]*pqr[1]-4*pqr[0]*pqr[2])) * checkPow(2*pqr[0],-1));
+            
+            if(pos[0]-pos[1] == 0 || pos[0]==0 || pos[1] ==0){
+                return null;
+            } else {
+                return pos;
+            }
+        }
     }
     
     public String check(){
         
         int cS = 0, cP = 0;
         for(int i=0; i<pqr.length; i++){
-            this.calcPQR();
+//            this.calcPQR();
             if(pqr[i] == 0){
 //                System.out.println("pqr: "+pqr[i]);
                 cP++;
@@ -57,31 +63,82 @@ public class BCHdecoder {
         }
         for (int i=0; i<s.length; i++){
             if(s[i] == 0){
-//                System.out.println("s: "+i);
+//                System.out.println("s: "+s[i]);
                 cS++;
             }
         }
 
+        
         if(cS==s.length){
-            checkError(0);
             return "No error";
-        } else if(cP==pqr.length ){
-            temp = checkError(1);
-            output(temp);
-//            System.out.println("s[]: " +Arrays.toString(s));
-            return "1 error at (i = "+temp[0][0]+" -> a = "+temp[0][1]+")";
             
-        } else if(this.calcSQRT()==0){
-            checkError(3);
+        } else if(cP==pqr.length){
+            temp = checkError(1);
+            if(temp[0][0]==0){
+                return "More than 2 errors";
+            } else{
+                System.out.println(output(temp));
+                return "1 error at (i = "+temp[0][0]+" -> a = "+temp[0][1]+")";
+            }
+        } else if(calcPos()==null){
             return "More than 2 errors";
+            
+            
         } else {
             temp = checkError(2);
-            output(temp);
-            return "Only 2 errors at (i = "+temp[0][0]+ " -> a = " + temp[0][1] +") & (j = " +temp[1][0]+" -> b = " +temp[1][1]+")";
+            System.out.println(output(temp));
+            return "Only 2 errors at (i = "+temp[0][0]+ " -> a = " + temp[0][1] +") & (j = " +temp[1][0]+" -> b = " +temp[1][1]+")"; 
+
         }
     }
     
+    public boolean checkDigit(){
+        int count=0;
+        for(int i:d){ 
+            if(i<10){count++;} 
+//            System.out.println("d: "+ i);
+        }
+        if(count==10){ return true; }
+        return false;
+    }
+    
+//    public boolean checkDiff(int[][] arr){
+//        
+//        int i=arr[0][0];
+//        int j=arr[1][0];
+//        
+//        if(i-j!=0) return true;
+//        return false;
+//    }
+    
+    public String output(int[][] arr){
+        
+//        System.out.println("test: " + Arrays.deepToString(arr));
+        for(int i=0; i<arr.length; i++){
+            
+//            System.out.println("arr: " + arr[0][0]);
+//            System.out.println("arr: " + arr[0][1]);
+//            System.out.println("ddd: " + d[arr[i][0]-1]);
+            
+            
+//            d[arr[i][0]-1] = checkNeg((d[arr[i][0]]-1) - (arr[i][1]));
+            d[arr[i][0]-1] = checkNeg((d[arr[i][0]-1]) - (arr[i][1]));
+            
+        }
+        StringBuilder builder = new StringBuilder();
+        for(int s : d) {
+            if(checkDigit()){
+                builder.append(s);
+            } else {
+                return "More than 2 errors. Digit include 10";
+            }
+        }
+        return "Output:\t" + builder.toString();
+    }
+    
     public int[][] checkError(int error){
+        
+        
         switch(error){
             case 0:
                 break;
@@ -89,30 +146,21 @@ public class BCHdecoder {
                 this.temp=new int[1][2];
                 temp[0][0]= (s[1]/s[0]);
                 temp[0][1]= (s[0]);
-//                return temp;
                 break;
             case 2:
-                int[] pos = this.calcPos();
+                int[] pos = calcPos();
                 this.temp = new int[2][2];
                 temp[1][0] = pos[1];
                 temp[1][1] = checkNeg(checkNeg(pos[0]*s[0]-s[1]) * checkPow(pos[0]-pos[1], -1));
                 temp[0][0] = pos[0];
                 temp[0][1] = checkNeg(s[0]-temp[1][1]);
+                
                 break;
         }
         return temp;
     }
     
-    public void output(int[][] arr){
-        
-        for(int i=0; i<arr.length; i++){
-            d[arr[i][0]-1] = checkNeg((d[arr[i][0]-1]) - (arr[i][1]));
-        }
-//        System.out.println("Output: " + Arrays.toString(d));
-        StringBuilder builder = new StringBuilder();
-        for(int s : d) {builder.append(s);}
-        System.out.println("Output:\t" + builder.toString());
-    }
+    
     
     public int checkNeg(int num){
         return num = Math.floorMod(num, 11);
@@ -143,8 +191,8 @@ public class BCHdecoder {
     }
     
     public void call(){
-//        System.out.println(" S[]: " +Arrays.toString(s));
-//        System.out.println("pqr[]: " + Arrays.toString(calcPQR()));
+        System.out.println("->Syn[]: " +Arrays.toString(s));
+        System.out.println("->PQR[]: " +Arrays.toString(calcPQR()));
         System.out.println("check: " +check());
 //        System.out.println("temp: " + Arrays.deepToString(temp));
 //        test();
