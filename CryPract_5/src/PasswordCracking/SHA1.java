@@ -1,17 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package PasswordCracking;
 
-package PasswordDemo;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-import java.io.BufferedReader; 
-import java.io.IOException; 
-import java.io.InputStreamReader; 
-import java.io.UnsupportedEncodingException; 
-import java.security.NoSuchAlgorithmException; 
- 
-import java.security.MessageDigest; 
- 
-public class PassMain { 
-  
-    private static String convertToHex(byte[] data) { 
+/**
+ *
+ * @author Marken Tuan Nguyen
+ */
+public class SHA1 {
+    private String convertToHex(byte[] data) { 
         StringBuffer buf = new StringBuffer(); 
         for (int i = 0; i < data.length; i++) { 
         	int halfbyte = (data[i] >>> 4) & 0x0F; 
@@ -27,7 +30,7 @@ public class PassMain {
         return buf.toString(); 
     } 
   
-    public static String SHA1(String text)  
+    public String SHA1(String text)  
     throws NoSuchAlgorithmException, UnsupportedEncodingException  { 
 	MessageDigest md; 
 	md = MessageDigest.getInstance("SHA-1"); 
@@ -36,15 +39,5 @@ public class PassMain {
 	sha1hash = md.digest(); 
 	return convertToHex(sha1hash); 
     } 
-     
-//    51e69892ab49df85c6230ccc57f8e1d1606caccc
-     
-    public static void main(String[] args) throws IOException { 
-		BufferedReader userInput = new BufferedReader (new InputStreamReader(System.in)); 
-  
-		System.out.println("Enter string:"); 
-		String rawString = userInput.readLine(); 
-  
-		
-	} 
-} 
+    
+}
