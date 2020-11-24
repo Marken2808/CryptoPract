@@ -87,14 +87,19 @@ public class BCHdecoder {
         } else {
             temp = checkError(2);
             System.out.println(output(temp));
-            return "Only 2 errors at (i = "+temp[0][0]+ " -> a = " + temp[0][1] +") & (j = " +temp[1][0]+" -> b = " +temp[1][1]+")"; 
+            
+            if(output(temp) != null){
+                return "Only 2 errors at (i = "+temp[0][0]+ " -> a = " + temp[0][1] +") & (j = " +temp[1][0]+" -> b = " +temp[1][1]+")"; 
+            }else{
+                return "More than 2 errors";
+            }
 
         }
     }
     
     public boolean checkDigit(){
         int count=0;
-        for(int i:d){ 
+        for(int i=0; i<d.length; i++){ 
             if(i<10){count++;} 
 //            System.out.println("d: "+ i);
         }
@@ -102,18 +107,7 @@ public class BCHdecoder {
         return false;
     }
     
-//    public boolean checkDiff(int[][] arr){
-//        
-//        int i=arr[0][0];
-//        int j=arr[1][0];
-//        
-//        if(i-j!=0) return true;
-//        return false;
-//    }
-    
     public String output(int[][] arr){
-        
-//        System.out.println("test: " + Arrays.deepToString(arr));
         for(int i=0; i<arr.length; i++){
             
 //            System.out.println("arr: " + arr[0][0]);
@@ -128,9 +122,10 @@ public class BCHdecoder {
         StringBuilder builder = new StringBuilder();
         for(int s : d) {
             if(checkDigit()){
+//                System.out.println("d= "+s);
                 builder.append(s);
             } else {
-                return "More than 2 errors. Digit include 10";
+                return null;
             }
         }
         return "Output:\t" + builder.toString();

@@ -23,7 +23,7 @@ public class BruteForce {
         if(!enTxt.trim().isEmpty()){
             fin = false;
             
-            for (int i = 1; i < enTxt.length(); i++) {
+            for (int i = 1; i < 7; i++) {
                 if (!fin) {
                     try {
                         char index[] = new char[i];
@@ -46,9 +46,9 @@ public class BruteForce {
         if(pos == index.length && !fin){
             
             passTest = new String(index);
-            System.out.println("passtest: "+ passTest);
+//            System.out.println("passtest: "+ passTest);
             passTestHash = sha1.SHA1(passTest);
-            System.out.println("passTestHash: "+ passTestHash);
+//            System.out.println("passTestHash: "+ passTestHash);
 
             if(passTestHash.equals(input)){
                 fin = true;
