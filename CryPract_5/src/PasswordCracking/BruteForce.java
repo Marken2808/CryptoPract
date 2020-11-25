@@ -23,7 +23,7 @@ public class BruteForce {
         if(!enTxt.trim().isEmpty()){
             fin = false;
             
-            for (int i = 1; i < 7; i++) {
+            for (int i = 1; i < enTxt.length(); i++) {
                 if (!fin) {
                     try {
                         char index[] = new char[i];
