@@ -20,12 +20,15 @@ public class Main {
         // TODO code application logic here
         Scanner sc = new Scanner(System.in);
         System.out.print(">>>Enter Text = ");
-        String shortMessage =  sc.next();
+        String shortMessage =  sc.nextLine();
+        
+//        System.out.println(shortMessage);
+        
         
         RSA testRSA = new RSA();
         testRSA.letCheckRSA(shortMessage);
-        AES testAES = new AES();
-        testAES.letCheckAES(shortMessage);
+//        AES testAES = new AES();
+//        testAES.letCheckAES(shortMessage);
         
     }
     

@@ -27,7 +27,7 @@ public class RSA {
     private final String MODE_OF_OPERATION = "ECB" ; // This essentially means none behind the scene
 
     public void letCheckRSA(String shortMessage) {
-
+//
         try {
 
             // Generate Key Pairs
@@ -35,10 +35,11 @@ public class RSA {
             rsaKeyGen.initialize(RSA_KEY_LENGTH) ;
             KeyPair rsaKeyPair = rsaKeyGen.generateKeyPair() ;
 
-            String encryptedText = rsaEncrypt(shortMessage, rsaKeyPair.getPublic());
-            String decryptedText = rsaDecrypt(Base64.getDecoder().decode(encryptedText), rsaKeyPair.getPrivate()) ;
+//            String encryptedText = rsaEncrypt(shortMessage, rsaKeyPair.getPublic());
+//            String decryptedText = rsaDecrypt(Base64.getDecoder().decode(encryptedText), rsaKeyPair.getPrivate()) ;
+            String decryptedText = rsaDecrypt(Base64.getDecoder().decode(shortMessage), rsaKeyPair.getPrivate()) ;
 
-            System.out.println("Encrypted RSA = " + encryptedText) ;
+//            System.out.println("Encrypted RSA = " + encryptedText) ;
             System.out.println("Decrypted RSA = " + decryptedText) ;
 
         } catch(Exception e) {System.out.println("Exception while encryption/decryption") ;} 
@@ -47,8 +48,8 @@ public class RSA {
 
     private String rsaEncrypt(String message, Key publicKey) throws Exception {
 
-        Cipher c = Cipher.getInstance(ALGORITHM_NAME + "/" + MODE_OF_OPERATION + "/" + PADDING_SCHEME) ;
-
+//        Cipher c = Cipher.getInstance(ALGORITHM_NAME + "/" + MODE_OF_OPERATION + "/" + PADDING_SCHEME) ;
+        Cipher c = Cipher.getInstance(ALGORITHM_NAME);
         c.init(Cipher.ENCRYPT_MODE, publicKey) ;
 
         byte[] cipherTextArray = c.doFinal(message.getBytes()) ;
@@ -60,7 +61,8 @@ public class RSA {
 
     private String rsaDecrypt(byte[] encryptedMessage, Key privateKey) throws Exception {
         
-        Cipher c = Cipher.getInstance(ALGORITHM_NAME + "/" + MODE_OF_OPERATION + "/" + PADDING_SCHEME) ;
+//        Cipher c = Cipher.getInstance(ALGORITHM_NAME + "/" + MODE_OF_OPERATION + "/" + PADDING_SCHEME) ;
+        Cipher c = Cipher.getInstance(ALGORITHM_NAME) ;
         c.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] plainText = c.doFinal(encryptedMessage);
 
