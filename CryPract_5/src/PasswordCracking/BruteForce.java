@@ -28,6 +28,7 @@ public class BruteForce {
                     try {
                         char index[] = new char[i];
 //                        abcdefghijklmnopqrstuvwxyz
+//0123456789
                         passTest = replay(index, 0, "0123456789", enTxt);
                     } catch (Exception e) {
                         //System.out.println(e);

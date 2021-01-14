@@ -16,20 +16,20 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        Scanner sc = new Scanner(System.in);
-        System.out.print(">>>Enter Text = ");
-        String shortMessage =  sc.nextLine();
-        
-//        System.out.println(shortMessage);
-        
-        
-        RSA testRSA = new RSA();
-        testRSA.letCheckRSA(shortMessage);
-//        AES testAES = new AES();
-//        testAES.letCheckAES(shortMessage);
-        
-    }
+//    public static void main(String[] args) {
+//        // TODO code application logic here
+//        Scanner sc = new Scanner(System.in);
+//        System.out.print(">>>Enter Text = ");
+//        String shortMessage =  sc.nextLine();
+//        
+////        System.out.println(shortMessage);
+//        
+//        
+//        RSA testRSA = new RSA();
+//        testRSA.letCheckRSA(shortMessage);
+////        AES testAES = new AES();
+////        testAES.letCheckAES(shortMessage);
+//        
+//    }
     
 }

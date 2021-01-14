@@ -23,8 +23,8 @@ public class RSA {
     
     private final int RSA_KEY_LENGTH = 4096;
     private final String ALGORITHM_NAME = "RSA" ;
-    private final String PADDING_SCHEME = "OAEPWITHSHA-512ANDMGF1PADDING" ;
-    private final String MODE_OF_OPERATION = "ECB" ; // This essentially means none behind the scene
+//    private final String PADDING_SCHEME = "OAEPWITHSHA-512ANDMGF1PADDING" ;
+//    private final String MODE_OF_OPERATION = "ECB" ; // This essentially means none behind the scene
 
     public void letCheckRSA(String shortMessage) {
 //
@@ -35,11 +35,11 @@ public class RSA {
             rsaKeyGen.initialize(RSA_KEY_LENGTH) ;
             KeyPair rsaKeyPair = rsaKeyGen.generateKeyPair() ;
 
-//            String encryptedText = rsaEncrypt(shortMessage, rsaKeyPair.getPublic());
-//            String decryptedText = rsaDecrypt(Base64.getDecoder().decode(encryptedText), rsaKeyPair.getPrivate()) ;
-            String decryptedText = rsaDecrypt(Base64.getDecoder().decode(shortMessage), rsaKeyPair.getPrivate()) ;
+            String encryptedText = rsaEncrypt(shortMessage, rsaKeyPair.getPublic());
+            String decryptedText = rsaDecrypt(Base64.getDecoder().decode(encryptedText), rsaKeyPair.getPrivate()) ;
+//            String decryptedText = rsaDecrypt(Base64.getDecoder().decode(shortMessage), rsaKeyPair.getPrivate()) ;
 
-//            System.out.println("Encrypted RSA = " + encryptedText) ;
+            System.out.println("Encrypted RSA = " + encryptedText) ;
             System.out.println("Decrypted RSA = " + decryptedText) ;
 
         } catch(Exception e) {System.out.println("Exception while encryption/decryption") ;} 
