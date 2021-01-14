@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -28,55 +29,78 @@ public class thisMain {
 //        String msg1 =  sc.nextLine();
         System.out.print(">>>Enter msg2 = ");
         String msg2 =  sc.nextLine();
+        String[] test = msg2.split("// ");
+        System.out.println("test: "+Arrays.toString(test));
+        
+        
+        long   keyGen = PRG(288,709);
+        System.out.println("Key (Dec): "+ keyGen);        
 
-        long keyGen = PRG(2808,709);
-        String msgHex = StringToHex(msg2);
-        String keyHex = LongToHex(keyGen);
+        String en = Encrypt(keyGen, msg2);
+
+        System.out.println("-------------------------------");
+        
+        Decrypt(keyGen, en);
+        
+    }
+    
+    public static String Encrypt(long KEY, String MSG){
+        String msgHex = StringToHex(MSG);
+        String keyHex = DecToHex(KEY);
         String xorHex = XOR(msgHex,keyHex);
         String xorBin = HexToBin(xorHex);
-        int    xorInt = BinToInt(xorBin);
-        System.out.println("Message -> String to hex : "+ msgHex);
-
-        System.out.println("ori Key: "+ keyGen);
-        System.out.println("KEY ->Long to hex: "+ keyHex);
-        System.out.println("test Key: "+ HexToLong(keyHex));
-        System.out.println("XOR: " +xorHex);
-        System.out.println("Hex to Bin: "+ xorBin);
-        System.out.println("Bin to Int: "+xorInt);
+        String xorDec = BinToDec(xorBin);
         
-    }
-    
-    public static int BinToInt(String bin){
-        Long decimal = Long.parseLong(bin, 2);
-//        System.out.println("INPUT=" + bin + " decimal=" + ) ;
-        return decimal.intValue();
-    }
-    
-    public static String HexToBin(String s) {
-        return new BigInteger(s, 16).toString(2);
-    }
-    
-    public static String XOR(String a, String b){
-        BigInteger i1 = new BigInteger(a, 16);
-        BigInteger i2 = new BigInteger(b, 16);
-        BigInteger res = i1.xor(i2);
-        return res.toString(16);
-    }
-    
-    public static Long PRG(int a, int b){
-        long p =(long) Math.pow(2, 32);
-        long seed = System.currentTimeMillis();
-        seed = ((a*seed)+b) % p;
         
-        return seed;
+        System.out.println("MSG ->Str to hex: "+ msgHex);
+        System.out.println("KEY ->Dec to Hex: "+ keyHex);
+        System.out.println("XOR (Hex): " +xorHex);
+        System.out.println("XOR ->Hex to Bin: "+ xorBin);
+        System.out.println("XOR ->Bin to Dec: "+xorDec);
+        
+        return xorDec;
     }
     
-    public static String LongToHex(long val){
+    public static String Decrypt(long KEY, String ENC){
+        String keyHex = DecToHex(KEY);
+        String decBin = DecToBin(ENC);
+        String binHex = BinToHex(decBin);
+        String xorHex = XOR(binHex, keyHex);
+        String msgStr = HexToString(xorHex);
+        
+        System.out.println("XOR ->Dec to Bin: "+ decBin);
+        System.out.println("XOR ->Bin to Hex: "+ binHex);
+        System.out.println("XOR BACK: "+ xorHex);
+        System.out.println("MSG BACK: "+ msgStr);
+        
+        return msgStr;
+    }
+    
+    
+    
+    public static String BinToDec(String bin){
+        return new BigInteger(bin, 2).toString(10);
+    }
+    
+    public static String DecToBin(String dec){
+        System.out.println("herre");
+        return new BigInteger(dec, 10).toString(2);
+    }
+    
+    public static String HexToBin(String hex) {
+        return new BigInteger(hex, 16).toString(2);
+    }
+    
+    public static String BinToHex(String bin){
+        return new BigInteger(bin, 2).toString(16); 
+    }
+    
+    public static String DecToHex(long val){
         return Long.toHexString(val);
     }
     
-    public static long HexToLong(String str){
-        return Long.valueOf(str, 16).longValue();
+    public static long HexToDec(String str){
+        return Long.valueOf(str, 16);
     }
     
     public static String StringToHex(String str) {
@@ -100,6 +124,7 @@ public class thisMain {
         }
         return result;
     }
+    
     private static boolean isHex(String s) { // check if s is a hex string
         char b;
         int n = s.length();
@@ -112,4 +137,17 @@ public class thisMain {
 	return true; 	
     }
    
+    public static String XOR(String a, String b){
+        BigInteger i1 = new BigInteger(a, 16);
+        BigInteger i2 = new BigInteger(b, 16);
+        BigInteger res = i1.xor(i2);
+        return res.toString(16);
+    }
+    
+    public static Long PRG(int a, int b){
+        long p =(long) Math.pow(2, 32);
+        long seed = System.currentTimeMillis();
+        seed = ((a*seed)+b) % p;
+        return seed;
+    }
 }
