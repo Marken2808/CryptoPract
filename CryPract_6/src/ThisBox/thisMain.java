@@ -33,14 +33,27 @@ public class thisMain {
         String msgHex = StringToHex(msg2);
         String keyHex = LongToHex(keyGen);
         String xorHex = XOR(msgHex,keyHex);
-        
+        String xorBin = HexToBin(xorHex);
+        int    xorInt = BinToInt(xorBin);
         System.out.println("Message -> String to hex : "+ msgHex);
 
         System.out.println("ori Key: "+ keyGen);
         System.out.println("KEY ->Long to hex: "+ keyHex);
         System.out.println("test Key: "+ HexToLong(keyHex));
         System.out.println("XOR: " +xorHex);
+        System.out.println("Hex to Bin: "+ xorBin);
+        System.out.println("Bin to Int: "+xorInt);
         
+    }
+    
+    public static int BinToInt(String bin){
+        Long decimal = Long.parseLong(bin, 2);
+//        System.out.println("INPUT=" + bin + " decimal=" + ) ;
+        return decimal.intValue();
+    }
+    
+    public static String HexToBin(String s) {
+        return new BigInteger(s, 16).toString(2);
     }
     
     public static String XOR(String a, String b){
