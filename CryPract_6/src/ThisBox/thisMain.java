@@ -10,6 +10,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -25,26 +26,67 @@ public class thisMain {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         // TODO code application logic here
         Scanner sc = new Scanner(System.in);
-//        System.out.print(">>>Enter msg1 = ");
-//        String msg1 =  sc.nextLine();
+        System.out.print(">>>Enter msg1 = ");
+        String msg1 =  sc.nextLine();
+        String[] msgArray = msg1.split("[// ]");
         System.out.print(">>>Enter msg2 = ");
-        String msg2 =  sc.nextLine();
-        String[] test = msg2.split("// ");
-        System.out.println("test: "+Arrays.toString(test));
+        String msg2 =  sc.nextLine();    
         
-        
-        long   keyGen = PRG(288,709);
-        System.out.println("Key (Dec): "+ keyGen);        
-
-        String en = Encrypt(keyGen, msg2);
+        String keyGen = PRG(288,709);
+        System.out.println("[Generate Key: "+ keyGen+"]");        
 
         System.out.println("-------------------------------");
+        String encrypted = Encrypt(keyGen, msg2);
+        System.out.println("Encrypted: "+ encrypted);
         
-        Decrypt(keyGen, en);
+        insert(msg1,encrypted);
+//        
+//        System.out.println("-------------------------------");
+//        String decrypted = Decrypt(keyGen, encrypted);
+//        
+//        System.out.println("<<<Return msg2 = "+decrypted);
+    }
+//    hello, my name is tuan, i am living at 709, Filton Avenue, Bristol, BS34 7JZ
+    public static void insert(String msg1, String msg2){
+        StringBuilder sb = new StringBuilder();
+        String[] msg1Array = msg1.split("[ ]");
+        String[] msg2Array = msg2.split("(?!^)");
+        String symbol = "¬~`!@£#$%^&*-_=+[{()}]\\|/;:'\",<.>/?";
+        
+        if(isLongMsg(msg1Array, msg2Array)){
+            int count = 0;
+            for(int i=0; i<msg2Array.length; i++){
+//                System.out.println("arr: " + msg1Array[i]);
+                char sym = symbol.charAt(new Random().nextInt(symbol.length()));
+                
+                String test = sym+msg2Array[i]+msg1Array[i];
+//                System.out.println("test: "+test);
+                sb.append(test).append(" ");
+                count++;
+            }
+
+            String[] rest = (Arrays.copyOfRange(msg1Array, count, msg1Array.length));
+            for(String r: rest){
+                sb.append(r).append(" ");  
+            }
+            System.out.println("new string: "+sb.toString());
+        } else {
+            System.out.println("<lessthan");
+        }
+        
         
     }
     
-    public static String Encrypt(long KEY, String MSG){
+    public static boolean isLongMsg(String[] msg1, String[] msg2){
+        if(msg1.length==msg2.length||msg1.length>msg2.length){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    public static String Encrypt(String KEY, String MSG){
         String msgHex = StringToHex(MSG);
         String keyHex = DecToHex(KEY);
         String xorHex = XOR(msgHex,keyHex);
@@ -52,26 +94,26 @@ public class thisMain {
         String xorDec = BinToDec(xorBin);
         
         
-        System.out.println("MSG ->Str to hex: "+ msgHex);
-        System.out.println("KEY ->Dec to Hex: "+ keyHex);
-        System.out.println("XOR (Hex): " +xorHex);
-        System.out.println("XOR ->Hex to Bin: "+ xorBin);
-        System.out.println("XOR ->Bin to Dec: "+xorDec);
+//        System.out.println("MSG ->Str to hex: "+ msgHex);
+//        System.out.println("KEY ->Dec to Hex: "+ keyHex);
+//        System.out.println("XOR (Hex): " +xorHex);
+//        System.out.println("XOR ->Hex to Bin: "+ xorBin);
+////        System.out.println("XOR ->Bin to Dec: "+xorDec);
         
         return xorDec;
     }
     
-    public static String Decrypt(long KEY, String ENC){
+    public static String Decrypt(String KEY, String ENC){
         String keyHex = DecToHex(KEY);
         String decBin = DecToBin(ENC);
         String binHex = BinToHex(decBin);
         String xorHex = XOR(binHex, keyHex);
         String msgStr = HexToString(xorHex);
         
-        System.out.println("XOR ->Dec to Bin: "+ decBin);
-        System.out.println("XOR ->Bin to Hex: "+ binHex);
-        System.out.println("XOR BACK: "+ xorHex);
-        System.out.println("MSG BACK: "+ msgStr);
+//        System.out.println("XOR ->Dec to Bin: "+ decBin);
+//        System.out.println("XOR ->Bin to Hex: "+ binHex);
+//        System.out.println("XOR BACK: "+ xorHex);
+////        System.out.println("MSG BACK: "+ msgStr);
         
         return msgStr;
     }
@@ -83,7 +125,6 @@ public class thisMain {
     }
     
     public static String DecToBin(String dec){
-        System.out.println("herre");
         return new BigInteger(dec, 10).toString(2);
     }
     
@@ -95,12 +136,14 @@ public class thisMain {
         return new BigInteger(bin, 2).toString(16); 
     }
     
-    public static String DecToHex(long val){
-        return Long.toHexString(val);
+    public static String DecToHex(String dec){
+        return new BigInteger(dec, 10).toString(16); 
+//        return Long.toHexString(val);
     }
     
-    public static long HexToDec(String str){
-        return Long.valueOf(str, 16);
+    public static String HexToDec(String hex){
+        return new BigInteger(hex, 16).toString(10); 
+//        return Long.valueOf(str, 16);
     }
     
     public static String StringToHex(String str) {
@@ -144,10 +187,11 @@ public class thisMain {
         return res.toString(16);
     }
     
-    public static Long PRG(int a, int b){
+    public static String PRG(int a, int b){
         long p =(long) Math.pow(2, 32);
         long seed = System.currentTimeMillis();
         seed = ((a*seed)+b) % p;
-        return seed;
+        
+        return Long.toString(seed);
     }
 }
