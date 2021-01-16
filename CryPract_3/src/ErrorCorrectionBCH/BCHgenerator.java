@@ -43,6 +43,7 @@ public class BCHgenerator {
             else {
                 count++;
             }
+//            System.out.println("count "+count);
         }
         
         if(count==0){

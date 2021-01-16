@@ -6,9 +6,6 @@
 package ThisBox;
 
 import java.math.BigInteger;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -19,49 +16,85 @@ import java.util.Scanner;
  */
 public class thisMain {
 
+    
     /**
      * @param args the command line arguments
-     * @throws java.security.NoSuchAlgorithmException
      */
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args)  {
         // TODO code application logic here
         Scanner sc = new Scanner(System.in);
         System.out.print(">>>Enter msg1 = ");
         String msg1 =  sc.nextLine();
-        String[] msgArray = msg1.split("[// ]");
+        
+        String keyGen = PRG(288,709);
+        System.out.println("<Generate Key: "+ keyGen+">"); 
+        
         System.out.print(">>>Enter msg2 = ");
         String msg2 =  sc.nextLine();    
         
-        String keyGen = PRG(288,709);
-        System.out.println("[Generate Key: "+ keyGen+"]");        
 
         System.out.println("-------------------------------");
-        String encrypted = Encrypt(keyGen, msg2);
-        System.out.println("Encrypted: "+ encrypted);
+        String enMsg2 = Encrypt(keyGen, msg2);
+        System.out.println("Encrypted Msg2: "+ enMsg2);
         
-        insert(msg1,encrypted);
-//        
-//        System.out.println("-------------------------------");
-//        String decrypted = Decrypt(keyGen, encrypted);
-//        
-//        System.out.println("<<<Return msg2 = "+decrypted);
+        String allEncryptMsg = mergeMsg(msg1,enMsg2);
+        System.out.println("Merged message: " + allEncryptMsg);
+        
+//        getKey(allEncryptMsg);
+        
+        
+        System.out.println("-------------------------------");
+        String decrypted = Decrypt(keyGen,splitMsg(allEncryptMsg));
+        
+        System.out.println("Decrypted Msg2 = "+decrypted);
     }
+    
+    
+    public static String[] Symbol(){
+        String symbol = "©®¬~`#^*-_=+[{}]\\|;:'<>/";
+        return symbol.split("(?!^)");
+    }
+    
+    public static boolean hasSymbol(String inputStr) {
+        for(int i=0; i < Symbol().length; i++){
+            if(inputStr.contains(Symbol()[i])){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static String splitMsg(String enMsg){
+        StringBuilder sb = new StringBuilder();
+        String[] enMsgArray = enMsg.split("[ ]");
+                
+        for(String msg: enMsgArray){
+            if(hasSymbol(msg)){
+                sb.append(msg.substring(1, 2));
+            }
+        }
+        return sb.toString();
+        
+    }
+    
 //    hello, my name is tuan, i am living at 709, Filton Avenue, Bristol, BS34 7JZ
-    public static void insert(String msg1, String msg2){
+    public static String mergeMsg(String msg1, String enMsg2){
         StringBuilder sb = new StringBuilder();
         String[] msg1Array = msg1.split("[ ]");
-        String[] msg2Array = msg2.split("(?!^)");
-        String symbol = "¬~`!@£#$%^&*-_=+[{()}]\\|/;:'\",<.>/?";
+        String[] enMsg2Array = enMsg2.split("(?!^)");
         
-        if(isLongMsg(msg1Array, msg2Array)){
+        
+        
+        if(isMsgLonger(msg1Array, enMsg2Array)){
             int count = 0;
-            for(int i=0; i<msg2Array.length; i++){
+            for(int i=0; i<enMsg2Array.length; i++){
 //                System.out.println("arr: " + msg1Array[i]);
-                char sym = symbol.charAt(new Random().nextInt(symbol.length()));
-                
-                String test = sym+msg2Array[i]+msg1Array[i];
+//                char sym = symbol.charAt(new Random().nextInt(symbol.length()));
+
+                int rand = new Random().nextInt(Symbol().length);
+                String sym = Symbol()[rand];
 //                System.out.println("test: "+test);
-                sb.append(test).append(" ");
+                sb.append(sym).append(enMsg2Array[i]).append(msg1Array[i]).append(" ");
                 count++;
             }
 
@@ -69,16 +102,15 @@ public class thisMain {
             for(String r: rest){
                 sb.append(r).append(" ");  
             }
-            System.out.println("new string: "+sb.toString());
         } else {
-            System.out.println("<lessthan");
+            return "msg1 too short or msg2 too long";
         }
         
-        
+        return sb.toString();
     }
     
-    public static boolean isLongMsg(String[] msg1, String[] msg2){
-        if(msg1.length==msg2.length||msg1.length>msg2.length){
+    public static boolean isMsgLonger(String[] msgArr, String[] encArr){
+        if(msgArr.length==encArr.length||msgArr.length>encArr.length){
             return true;
         } else {
             return false;

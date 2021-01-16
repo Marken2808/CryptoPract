@@ -31,14 +31,16 @@ public class BCHmain {
         
         
         
-//        System.out.println(" d[]: " +Arrays.toString(d));
-//        System.out.println(" input: " +input);
-//        System.out.println(" temp: " +Arrays.toString(temp));
-//        BCHgenerator digit = new BCHgenerator(d);
-//        int[] new_d = digit.addDigit();
-        BCHdecoder dec = new BCHdecoder(d);
-        System.out.println("input:\t"+input);
-        dec.call();
+        System.out.println(" d[]: " +Arrays.toString(d));
+        System.out.println(" input: " +input);
+        System.out.println(" temp: " +Arrays.toString(temp));
+        BCHgenerator digit = new BCHgenerator(d);
+        int[] new_d = digit.addDigit();
+        System.out.println("gen: "+digit.getNumberic());
+
+//        BCHdecoder dec = new BCHdecoder(d);
+//        System.out.println("input:\t"+input);
+//        dec.call();
         
     }
     
