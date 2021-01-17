@@ -149,7 +149,6 @@ public class BCHdecoder {
                 temp[1][1] = checkNeg(checkNeg(pos[0]*s[0]-s[1]) * checkPow(pos[0]-pos[1], -1));
                 temp[0][0] = pos[0];
                 temp[0][1] = checkNeg(s[0]-temp[1][1]);
-                
                 break;
         }
         return temp;

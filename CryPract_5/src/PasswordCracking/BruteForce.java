@@ -16,20 +16,21 @@ public class BruteForce {
     
     private boolean fin;
     private String passTest;
+    int countNum = 0;
+    
+    String numberType = "0123456789";
+    String letterType = "abcdefghijklmnopqrstuvwxyz";
     
     public String BruteForce(String enTxt) throws NoSuchAlgorithmException, UnsupportedEncodingException{
-//        String input = enTxt.trim();
-//        System.out.println("input: "+enTxt.trim());
+
         if(!enTxt.trim().isEmpty()){
             fin = false;
             
-            for (int i = 1; i < enTxt.length(); i++) {
+            for (int i = 1; i < 7; i++) {
                 if (!fin) {
                     try {
                         char index[] = new char[i];
-//                        abcdefghijklmnopqrstuvwxyz
-//0123456789
-                        passTest = replay(index, 0, "0123456789", enTxt);
+                        passTest = replay(index, 0, numberType, enTxt);
                     } catch (Exception e) {
                         //System.out.println(e);
                     }
@@ -52,11 +53,18 @@ public class BruteForce {
             passTestHash = sha1.SHA1(passTest);
 //            System.out.println("passTestHash: "+ passTestHash);
 
+//            if(str.equals(numberType) && countNum==6){
+//                    System.out.println("str"+ str.equals(numberType) +" "+ (countNum));
+//                        System.out.println("6 here: "+passTest);
+//                        return passTest;
+//                    }
+
             if(passTestHash.equals(input)){
+                
                 fin = true;
                 return passTest;
             }
-
+            
         } else {
             for(int i = 0; i < str.length(); i++){
 //                System.out.println("index: "+index[pos]);
