@@ -7,6 +7,7 @@ package PasswordCracking;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 /**
  *
@@ -26,13 +27,13 @@ public class BruteForce {
         if(!enTxt.trim().isEmpty()){
             fin = false;
             
-            for (int i = 1; i < 7; i++) {
+            for (int i = 1; i < enTxt.length(); i++) {
                 if (!fin) {
                     try {
                         char index[] = new char[i];
-                        passTest = replay(index, 0, numberType, enTxt);
+                        passTest = replay(index, 0, letterType, enTxt);
                     } catch (Exception e) {
-                        //System.out.println(e);
+//                        System.out.println(passTest);
                     }
                 }
             }
@@ -44,7 +45,7 @@ public class BruteForce {
         
         SHA1 sha1 = new SHA1();
         String passTestHash;
-        
+        String BCHTestHash;
         
         if(pos == index.length && !fin){
             
@@ -53,12 +54,17 @@ public class BruteForce {
             passTestHash = sha1.SHA1(passTest);
 //            System.out.println("passTestHash: "+ passTestHash);
 
-//            if(str.equals(numberType) && countNum==6){
-//                    System.out.println("str"+ str.equals(numberType) +" "+ (countNum));
-//                        System.out.println("6 here: "+passTest);
-//                        return passTest;
-//                    }
-
+//            if(index.length==6){
+//                BCHgenerator test = new BCHgenerator(index);
+//                test.addDigit();
+//                BCHTestHash = sha1.SHA1(test.getNumberic());
+////                System.out.println("gen: "+test.getNumberic());
+//                if(BCHTestHash.equals(input)){
+//                    fin = true;
+//                    return passTest = test.getNumberic();
+//                }
+//            }
+            
             if(passTestHash.equals(input)){
                 
                 fin = true;
