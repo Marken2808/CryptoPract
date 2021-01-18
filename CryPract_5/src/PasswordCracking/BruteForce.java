@@ -5,10 +5,6 @@
  */
 package PasswordCracking;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-
 /**
  *
  * @author Marken Tuan Nguyen
@@ -22,7 +18,7 @@ public class BruteForce {
     String numberType = "0123456789";
     String letterType = "abcdefghijklmnopqrstuvwxyz";
     
-    public String BruteForce(String enTxt) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+    public String BruteForce(String enTxt){
 
         if(!enTxt.trim().isEmpty()){
             fin = false;
@@ -31,7 +27,7 @@ public class BruteForce {
                 if (!fin) {
                     try {
                         char index[] = new char[i];
-                        passTest = replay(index, 0, letterType, enTxt);
+                        passTest = replay(index, 0, numberType, enTxt);
                     } catch (Exception e) {
 //                        System.out.println(passTest);
                     }
@@ -41,7 +37,7 @@ public class BruteForce {
         return passTest;
     }
     
-    private String replay(char[] index, int pos, String str, String input) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+    private String replay(char[] index, int pos, String str, String input){
         
         SHA1 sha1 = new SHA1();
         String passTestHash;
@@ -54,22 +50,22 @@ public class BruteForce {
             passTestHash = sha1.SHA1(passTest);
 //            System.out.println("passTestHash: "+ passTestHash);
 
-//            if(index.length==6){
-//                BCHgenerator test = new BCHgenerator(index);
-//                test.addDigit();
-//                BCHTestHash = sha1.SHA1(test.getNumberic());
-////                System.out.println("gen: "+test.getNumberic());
-//                if(BCHTestHash.equals(input)){
-//                    fin = true;
-//                    return passTest = test.getNumberic();
-//                }
-//            }
-            
-            if(passTestHash.equals(input)){
-                
-                fin = true;
-                return passTest;
+            if(index.length==6){
+                BCHgenerator test = new BCHgenerator(index);
+                test.addDigit();
+                BCHTestHash = sha1.SHA1(test.getNumberic());
+//                System.out.println("gen: "+test.getNumberic());
+                if(BCHTestHash.equals(input)){
+                    fin = true;
+                    return passTest = test.getNumberic();
+                }
             }
+            
+//            if(passTestHash.equals(input)){
+//                
+//                fin = true;
+//                return passTest;
+//            }
             
         } else {
             for(int i = 0; i < str.length(); i++){

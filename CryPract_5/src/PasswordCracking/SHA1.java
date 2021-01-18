@@ -8,6 +8,8 @@ package PasswordCracking;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,14 +32,17 @@ public class SHA1 {
         return buf.toString(); 
     } 
   
-    public String SHA1(String text)  
-    throws NoSuchAlgorithmException, UnsupportedEncodingException  { 
-	MessageDigest md; 
-	md = MessageDigest.getInstance("SHA-1"); 
-	byte[] sha1hash = new byte[40]; 
-	md.update(text.getBytes("iso-8859-1"), 0, text.length()); 
-	sha1hash = md.digest(); 
-	return convertToHex(sha1hash); 
+    public String SHA1(String text)  { 
+        MessageDigest md;
+        byte[] sha1hash = new byte[40];
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+            md.update(text.getBytes("iso-8859-1"), 0, text.length());
+            sha1hash = md.digest(); 
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            Logger.getLogger(SHA1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return convertToHex(sha1hash);
     } 
     
 }
