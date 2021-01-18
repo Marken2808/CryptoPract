@@ -48,9 +48,9 @@ public class BruteForce {
             passTest = new String(index);
 //            System.out.println("passtest: "+ passTest);
             passTestHash = sha1.SHA1(passTest);
-//            System.out.println("passTestHash: "+ passTestHash);
+            System.out.println("passTestHash: "+ passTestHash);
 
-            if(index.length==6){
+            if(index.length==6){    // number type only
                 BCHgenerator test = new BCHgenerator(index);
                 test.addDigit();
                 BCHTestHash = sha1.SHA1(test.getNumberic());
@@ -61,7 +61,7 @@ public class BruteForce {
                 }
             }
             
-//            if(passTestHash.equals(input)){
+//            if(passTestHash.equals(input)){   // letter type only
 //                
 //                fin = true;
 //                return passTest;
