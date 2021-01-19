@@ -14,8 +14,7 @@ import java.util.Scanner;
  *
  * @author Marken Tuan Nguyen
  */
-public class thisMain {
-
+public class Main {
     
     /**
      * @param args the command line arguments
@@ -83,16 +82,15 @@ public class thisMain {
         String[] msg1Array = msg1.split("[ ]");
         String[] enMsg2Array = enMsg2.split("(?!^)");
         
-        
-        
         if(isMsgLonger(msg1Array, enMsg2Array)){
             int count = 0;
             for(int i=0; i<enMsg2Array.length; i++){
 //                System.out.println("arr: " + msg1Array[i]);
 //                char sym = symbol.charAt(new Random().nextInt(symbol.length()));
 
-                int rand = new Random().nextInt(Symbol().length);
-                String sym = Symbol()[rand];
+            int rand = new Random().nextInt(Symbol().length);
+            String sym = Symbol()[rand];
+                
 //                System.out.println("test: "+test);
                 sb.append(sym).append(enMsg2Array[i]).append(msg1Array[i]).append(" ");
                 count++;
@@ -103,18 +101,22 @@ public class thisMain {
                 sb.append(r).append(" ");  
             }
         } else {
-            return "msg1 too short or msg2 too long";
+            
+            for(String digit: enMsg2Array){
+                int rand = new Random().nextInt(Symbol().length);
+                String sym = Symbol()[rand];
+                sb.append(sym).append(digit).append(" ");
+            }
+            for(String word: msg1Array){
+                sb.append(word).append(" ");
+            }
         }
         
         return sb.toString();
     }
     
     public static boolean isMsgLonger(String[] msgArr, String[] encArr){
-        if(msgArr.length==encArr.length||msgArr.length>encArr.length){
-            return true;
-        } else {
-            return false;
-        }
+        return (msgArr.length==encArr.length||msgArr.length>encArr.length);
     }
     
     
