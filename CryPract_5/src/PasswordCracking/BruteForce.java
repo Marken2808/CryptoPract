@@ -16,7 +16,7 @@ public class BruteForce {
     int countNum = 0;
     
     String numberType = "0123456789";
-    String letterType = "abcdefghijklmnopqrstuvwxyz";
+    String letterType = "abcdefghijklmnopqrstuvwxyz0123456789";
     
     public String BruteForce(String enTxt){
 
@@ -48,7 +48,7 @@ public class BruteForce {
             passTest = new String(index);
 //            System.out.println("passtest: "+ passTest);
             passTestHash = sha1.SHA1(passTest);
-            System.out.println("passTestHash: "+ passTestHash);
+//            System.out.println("passTestHash: "+ passTestHash);
 
             if(index.length==6){    // number type only
                 BCHgenerator test = new BCHgenerator(index);
