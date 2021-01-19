@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ThisBox;
+package Message_Cipher_Steganography;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -119,7 +119,7 @@ public class thisMain {
     
     
     public static String Encrypt(String KEY, String MSG){
-        String msgHex = StringToHex(MSG);
+        String msgHex = StrToHex(MSG);
         String keyHex = DecToHex(KEY);
         String xorHex = XOR(msgHex,keyHex);
         String xorBin = HexToBin(xorHex);
@@ -140,7 +140,7 @@ public class thisMain {
         String decBin = DecToBin(ENC);
         String binHex = BinToHex(decBin);
         String xorHex = XOR(binHex, keyHex);
-        String msgStr = HexToString(xorHex);
+        String msgStr = HexToStr(xorHex);
         
 //        System.out.println("XOR ->Dec to Bin: "+ decBin);
 //        System.out.println("XOR ->Bin to Hex: "+ binHex);
@@ -178,7 +178,7 @@ public class thisMain {
 //        return Long.valueOf(str, 16);
     }
     
-    public static String StringToHex(String str) {
+    public static String StrToHex(String str) {
         StringBuilder sb = new StringBuilder();
         //Converting string to character array
         char ch[] = str.toCharArray();
@@ -189,7 +189,7 @@ public class thisMain {
         return sb.toString();
     }
     
-    public static String HexToString(String str){
+    public static String HexToStr(String str){
         String result = new String();
         char[] charArray = str.toCharArray();
         for(int i = 0; i < charArray.length; i=i+2) {

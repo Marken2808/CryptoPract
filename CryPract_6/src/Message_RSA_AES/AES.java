@@ -1,4 +1,4 @@
-package MessageBox;
+package Message_RSA_AES;
 
 import javax.crypto.Cipher ;
 import java.security.SecureRandom ;
