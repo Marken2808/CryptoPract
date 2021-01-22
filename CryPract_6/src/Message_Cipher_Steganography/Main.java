@@ -50,7 +50,7 @@ public class Main {
     
     
     public static String[] Symbol(){
-        String symbol = "©®¬~`#^*-_=+[{}]\\|;:'<>/";
+        String symbol = "©®¬~`#^*-_=[{}]\\|;:<>/";
         return symbol.split("(?!^)");
     }
     
@@ -120,12 +120,12 @@ public class Main {
     }
     
     
-    public static String Encrypt(String KEY, String MSG){
-        String msgHex = StrToHex(MSG);
-        String keyHex = DecToHex(KEY);
-        String xorHex = XOR(msgHex,keyHex);
-        String xorBin = HexToBin(xorHex);
-        String xorDec = BinToDec(xorBin);
+    public static String Encrypt(String KEY, String MSG){   //param key, msg 1 input
+        String msgHex = StrToHex(MSG);                      //change msg to hex
+        String keyHex = DecToHex(KEY);                      //change key to hex
+        String xorHex = XOR(msgHex,keyHex);                 //combine key, msg1
+        String xorBin = HexToBin(xorHex);                   //that result to binary
+        String xorDec = BinToDec(xorBin);                   //change to decimal
         
         
 //        System.out.println("MSG ->Str to hex: "+ msgHex);
@@ -137,12 +137,12 @@ public class Main {
         return xorDec;
     }
     
-    public static String Decrypt(String KEY, String ENC){
-        String keyHex = DecToHex(KEY);
-        String decBin = DecToBin(ENC);
-        String binHex = BinToHex(decBin);
-        String xorHex = XOR(binHex, keyHex);
-        String msgStr = HexToStr(xorHex);
+    public static String Decrypt(String KEY, String ENC){   //param key, encrypted ciphertext
+        String keyHex = DecToHex(KEY);                      //change key to hex
+        String decBin = DecToBin(ENC);                      //change encrypted msg2 to binaray
+        String binHex = BinToHex(decBin);                   //bin to hex
+        String xorHex = XOR(binHex, keyHex);                //combine hex key and hex msg2
+        String msgStr = HexToStr(xorHex);                   // to string
         
 //        System.out.println("XOR ->Dec to Bin: "+ decBin);
 //        System.out.println("XOR ->Bin to Hex: "+ binHex);
@@ -221,10 +221,10 @@ public class Main {
         return res.toString(16);
     }
     
-    public static String PRG(int a, int b){
-        long p =(long) Math.pow(2, 32);
-        long seed = System.currentTimeMillis();
-        seed = ((a*seed)+b) % p;
+    public static String PRG(int a, int b){     //Random key generated, i used a=288, b=709
+        long p =(long) Math.pow(2, 32);         //pick large period
+        long seed = System.currentTimeMillis(); //starting at milis value because not repeat result
+        seed = ((a*seed)+b) % p;                //Linear function
         
         return Long.toString(seed);
     }
