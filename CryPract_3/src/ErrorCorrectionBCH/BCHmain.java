@@ -20,27 +20,33 @@ public class BCHmain {
     public static void main(String[] args){
         // TODO code application logic here
         
-        
+//        
         Scanner sc = new Scanner(System.in);
-        String input = sc.next();             // int < long, but String can start with "0"
-        String[] temp = input.split("");
+        String input = sc.nextLine();             // int < long, but String can start with "0"
+        String[] temp = input.trim().split(", ");
+//        
+//        System.out.println(Arrays.toString(temp));
         int d[] = new int[temp.length];
         for(int i=0; i<temp.length; i++) {
                 d[i] = Integer.parseInt(temp[i]); 
         }
-        
-        
-        
-//        System.out.println(" d[]: " +Arrays.toString(d));
-//        System.out.println(" input: " +input);
-//        System.out.println(" temp: " +Arrays.toString(temp));
-//        BCHgenerator digit = new BCHgenerator(d);
+//        
+//        BCH1612Gen digit = new BCH1612Gen(d);
 //        int[] new_d = digit.addDigit();
 //        System.out.println("gen: "+digit.getNumberic());
 
-        BCHdecoder dec = new BCHdecoder(d);
+
+        BCH1612 bch16 = new BCH1612(d);
         System.out.println("input:\t"+input);
-        dec.call();
+        bch16.call();
+        
+//        int[] num = new int[12];
+//        for(int i=0; i<num.length; i++){
+//            System.out.println("enter: ");
+//            num[i] = Math.floorMod(-sc.nextInt(), 17);
+//        }
+//        
+//        System.out.println("ar: "+Arrays.toString(num));
         
     }
     
